@@ -23,7 +23,12 @@ jobs:
         run: |
           mvn -Pnative clean package
           upx target/java-format-service
-      
+      - name: Upx
+        uses: svenstaro/upx-action@v2
+        with:
+          files: |
+            target/java-format-service
+          strip: true
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
