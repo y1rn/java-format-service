@@ -15,18 +15,31 @@ import com.google.googlejavaformat.java.JavaFormatterOptions.Style;
 import com.google.googlejavaformat.java.RemoveUnusedImports;
 import com.google.googlejavaformat.java.Replacement;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class DifferTest {
 
+  static final String INPUT =
+      "package hello;\r\n"
+          + "\r\n"
+          + "import org.springframework.boot.SpringApplication;\r\n"
+          + "import org.springframework.boot.autoconfigure.SpringBootApplication;\r\n"
+          + "\r\n"
+          + "@SpringBootApplication\r\n"
+          + "public class Application {\r\n"
+          + "\r\n"
+          + "  public static void main(String[] args) {\r\n"
+          + "    SpringApplication.run(Application.class, args);\r\n"
+          + "  }\r\n"
+          + "}\r\n"
+          + "";
+
   @Test
   void diffFormat() throws IOException, PatchFailedException, FormatterException {
 
-    String input = Files.readString(Path.of("src/main/java/y1rn/javaformat/Request.java"));
+    String input = INPUT;
 
     JavaFormatterOptions options = JavaFormatterOptions.builder().style(Style.GOOGLE).build();
     Formatter formater = new Formatter(options);
