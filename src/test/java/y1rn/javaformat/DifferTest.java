@@ -11,8 +11,8 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 import com.google.googlejavaformat.java.ImportOrderer;
 import com.google.googlejavaformat.java.JavaFormatterOptions;
-import com.google.googlejavaformat.java.RemoveUnusedImports;
 import com.google.googlejavaformat.java.JavaFormatterOptions.Style;
+import com.google.googlejavaformat.java.RemoveUnusedImports;
 import com.google.googlejavaformat.java.Replacement;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +26,7 @@ public class DifferTest {
   @Test
   void diffFormat() throws IOException, PatchFailedException, FormatterException {
 
-    String input = Files.readString(Path.of("/root/temp/vscode-google-java-format/java-format-service/src/main/java/y1rn/javaformat/Request.java"));
+    String input = Files.readString(Path.of("src/main/java/y1rn/javaformat/Request.java"));
 
     JavaFormatterOptions options = JavaFormatterOptions.builder().style(Style.GOOGLE).build();
     Formatter formater = new Formatter(options);
