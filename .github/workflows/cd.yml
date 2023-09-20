@@ -2,7 +2,9 @@ name: GraalVM Native Image builds
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
+permissions:
+  contents: write
 jobs:
   build:
     name: Java-format-service on ${{ matrix.os }}
@@ -12,10 +14,13 @@ jobs:
         include:
           - os: ubuntu-latest
             file_ext: ""
+            arch: linux-amd64
           - os: windows-latest
             file_ext: ".exe"
-          - os: macos-latest
-            file_ext: ""
+            arch: windows-amd64
+          # - os: macos-latest
+          #   file_ext: ""
+          #   arch: darwin-aarch64
     steps:
       - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
@@ -24,19 +29,19 @@ jobs:
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
-
       - name: Build
         run: |
           mvn -Pnative clean package
-          upx target/java-format-service
       - name: Upx
         uses: svenstaro/upx-action@v2
         with:
           files: |
-            target/java-format-service
-          strip: true
-      - name: Upload binary
-        uses: actions/upload-artifact@v3
+            target/java-format-service${{ matrix.file_ext }}
+          args: -o target/java-format-service-${{ matrix.arch }}${{ matrix.file_ext }}
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        # TODO: if any of the build step fails, the release should be deleted.
         with:
-          name: java-format-service-${{ matrix.os }}${{ matrix.file_ext }}
-          path: target/java-format-service
+          files: target/java-format-service-${{ matrix.arch }}${{ matrix.file_ext }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
