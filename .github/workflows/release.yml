@@ -27,5 +27,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: helloworld-${{ matrix.os }}
+          name: java-format-service-${{ matrix.os }}
           path: target/java-format-service
