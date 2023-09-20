@@ -9,7 +9,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        include:
+          - os: ubuntu-latest
+            file_ext: ""
+          - os: windows-latest
+            file_ext: ".exe"
+          - os: macos-latest
+            file_ext: ""
     steps:
       - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
@@ -32,5 +38,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: java-format-service-${{ matrix.os }}
+          name: java-format-service-${{ matrix.os }}${{ matrix.file_ext }}
           path: target/java-format-service
