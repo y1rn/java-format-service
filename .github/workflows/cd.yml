@@ -17,7 +17,7 @@ jobs:
             arch: linux-amd64
           - os: windows-latest
             file_ext: ".exe"
-            arch: windows-amd64
+            arch: win32-amd64
           # - os: macos-latest
           #   file_ext: ""
           #   arch: darwin-aarch64
@@ -37,11 +37,21 @@ jobs:
         with:
           files: |
             target/java-format-service${{ matrix.file_ext }}
-          args: -o target/java-format-service-${{ matrix.arch }}${{ matrix.file_ext }}
+          args: -o target/java-format-service_${{ matrix.arch }}${{ matrix.file_ext }}
       - name: Publish
         uses: softprops/action-gh-release@v1
         # TODO: if any of the build step fails, the release should be deleted.
         with:
-          files: target/java-format-service-${{ matrix.arch }}${{ matrix.file_ext }}
+          files: |
+            target/java-format-service_${{ matrix.arch }}${{ matrix.file_ext }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish jar
+        uses: softprops/action-gh-release@v1
+        if: ${{ matrix.os }} == 'ubuntu-latest'
+        # TODO: if any of the build step fails, the release should be deleted.
+        with:
+          files: |
+            target/java-format-service.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
