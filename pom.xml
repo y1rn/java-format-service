@@ -141,7 +141,7 @@
             <configuration>
               <skipNativeTests>true</skipNativeTests>
               <buildArgs>
-                <arg>-march=native</arg>
+                <!-- <arg>-march=native</arg> -->
                 <arg>-J-Xlog:jni+resolve=off</arg>
                 <arg>--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
                 <arg>--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
@@ -187,7 +187,7 @@
                     <argument>ghcr.io/graalvm/native-image-community</argument>
                     <argument>-jar</argument>
                     <argument>/jar/${project.artifactId}.jar</argument>
-                    <argument>-march=native</argument>
+                    <!-- <argument>-march=native</argument> -->
                     <argument>-J-Xlog:jni+resolve=off</argument>
                     <argument>--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</argument>
                     <argument>--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</argument>
