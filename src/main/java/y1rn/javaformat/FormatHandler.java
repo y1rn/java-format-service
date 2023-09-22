@@ -5,10 +5,12 @@ import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.googlejavaformat.Newlines;
 import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
 import com.google.googlejavaformat.java.ImportOrderer;
 import com.google.googlejavaformat.java.JavaFormatterOptions;
 import com.google.googlejavaformat.java.RemoveUnusedImports;
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
@@ -93,8 +95,12 @@ public class FormatHandler extends StreamMessageConsumer {
       }
       String sep = Newlines.guessLineSeparator(input);
       respResult = Differ.getTextEdit(input, output, sep);
+    } catch (FormatterException e) {
+      throw new MessageIssueException(request, Collections.emptyList());
     } catch (Exception e) {
       throw new MessageIssueException(request, new MessageIssue("format error", 500, e));
+    } catch (Throwable e) {
+      throw new MessageIssueException(request, new MessageIssue(e.getMessage()));
     }
     ResponseMessage resp = new ResponseMessage();
     resp.setId(Integer.parseInt(requestId));
