@@ -8,18 +8,13 @@ import java.util.logging.LogManager;
 
 public class LogConfig {
 
-  private static boolean loaded;
-
   static {
     init();
   }
 
   private LogConfig() {}
 
-  public static synchronized void init() {
-    if (loaded) {
-      return;
-    }
+  public static void init() {
     LogManager lm = LogManager.getLogManager();
     String logLevel = Level.SEVERE.getName();
     System.setProperty("java.util.logging.SimpleFormatter.format", "[y1rn.java-format]: %5$s");
@@ -51,7 +46,6 @@ public class LogConfig {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    loaded = true;
   }
 
   public static String getValue(String key, String def) {
