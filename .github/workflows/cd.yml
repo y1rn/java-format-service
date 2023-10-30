@@ -32,11 +32,11 @@ jobs:
       - name: Build
         run: |
           mvn -Pnative clean package
-      - name: Windows rename
-        shell: powershell
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          ren .\target\java-format-service${{ matrix.file_ext }} java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
+      # - name: Windows rename
+      #   shell: powershell
+      #   if: ${{ matrix.os == 'windows-latest' }}
+      #   run: |
+      #     ren .\target\java-format-service${{ matrix.file_ext }} java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
       - name: Upx
         uses: crazy-max/ghaction-upx@v3
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -45,6 +45,14 @@ jobs:
           files: |
             target/java-format-service${{ matrix.file_ext }}
           args: -otarget/java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
+      - name: Upx windows
+        uses: crazy-max/ghaction-upx@v3
+        if: ${{ matrix.os == 'windows-latest' }}
+        with:
+          version: latest
+          files: |
+            target/java-format-service${{ matrix.file_ext }}
+          args: -4 -otarget/java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
       - name: Cert
         if: ${{ matrix.os == 'windows-latest' }}
         uses: dlemstra/code-sign-action@v1
