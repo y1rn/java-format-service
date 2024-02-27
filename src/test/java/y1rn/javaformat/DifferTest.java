@@ -68,4 +68,3 @@ public class DifferTest {
     assert respResult.size() == 0;
   }
 }
-

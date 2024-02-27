@@ -108,4 +108,3 @@ public class FormatHandler extends StreamMessageConsumer {
     super.consume(resp);
   }
 }
-

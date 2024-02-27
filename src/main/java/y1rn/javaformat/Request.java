@@ -26,4 +26,3 @@ public class Request {
     private Integer end;
   }
 }
-

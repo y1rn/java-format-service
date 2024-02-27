@@ -39,4 +39,3 @@ public class TextEdit {
     int character;
   }
 }
-

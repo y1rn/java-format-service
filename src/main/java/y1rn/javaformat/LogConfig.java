@@ -56,4 +56,3 @@ public class LogConfig {
     return Strings.isNullOrEmpty(v) ? def : v;
   }
 }
-
