@@ -65,7 +65,7 @@ jobs:
             java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
 
       - name: Publish
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             target/java-format-service${{ matrix.arch }}${{ matrix.file_ext }}
